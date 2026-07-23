@@ -1,0 +1,56 @@
+var viaCreacion = new ViaMagia(VIA_CREACION,VIA_CREACION_DESCRIPCION,VIA_DESTRUCCION);
+
+viaCreacion.nivelesLibreAcceso.push(4);
+viaCreacion.nivelesLibreAcceso.push(14);
+viaCreacion.nivelesLibreAcceso.push(24);
+viaCreacion.nivelesLibreAcceso.push(34);
+viaCreacion.nivelesLibreAcceso.push(44);
+viaCreacion.nivelesLibreAcceso.push(54);
+viaCreacion.nivelesLibreAcceso.push(64);
+viaCreacion.nivelesLibreAcceso.push(74);
+viaCreacion.nivelesLibreAcceso.push(84);
+viaCreacion.nivelesLibreAcceso.push(94);
+
+
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CREACION_MENOR, 2));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_RECONSTRUIR, 6));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CREAR_ENERGIA, 8));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_REGENERACION, 10));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_MODIFICACION_INORGANICA, 12));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_AUMENTAR_RESISTENCIAS, 16));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_ESCUDO_REAL, 18));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CURACION, 20));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_BARRERA_DE_DAÑO, 22));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CREAR_HOMUNCULO, 26));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CAMBIO_MENOR, 28));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_IMITAR, 30));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_INMUNIDAD, 32));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_REDUCCION_DE_DAÑO, 36));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CONTROL_FISICO, 38));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_ADQUIRIR_HABILIDADES, 40));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_FUSIONAR, 42));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CREAR_RECUERDOS, 46));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_RECUPERAR, 48));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_ADQUIRIR_PODERES, 50));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CREAR_ENGENDRO, 52));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_AURA_DE_PROTECCION, 56));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_ESTANCAR_ESENCIA, 58));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_ESCUDO_PERFECTO, 60));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_VITALIDAD, 62));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CREACION_COMPLETA, 66));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_POTENCIAR_MAGIA, 68));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_TRANSMUTAR, 70));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_METAMORFISMO, 72));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_RECREAR, 76));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CREAR_SER, 78));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_QUIMERA, 80));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_ZONA_DE_SALVAGUARDIA, 82));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_MANTENIMIENTO, 86));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_OTORGAR_ALMA, 88));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CREACION_MAYOR, 90));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_MAGIA_ETERNA, 92));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_LA_BARRERA, 96));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_EL_DON_DE_LA_VIDA, 98));
+viaCreacion.addConjuro(new Conjuro( CONJURO_CREACION_CREAR, 100));
+
+vias_set.push(viaCreacion);

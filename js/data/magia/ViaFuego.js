@@ -1,0 +1,56 @@
+var viaFuego = new ViaMagia(VIA_FUEGO,VIA_FUEGO_DESCRIPCION,VIA_AGUA);
+
+viaFuego.nivelesLibreAcceso.push(4);
+viaFuego.nivelesLibreAcceso.push(8);
+viaFuego.nivelesLibreAcceso.push(14);
+viaFuego.nivelesLibreAcceso.push(18);
+viaFuego.nivelesLibreAcceso.push(24);
+viaFuego.nivelesLibreAcceso.push(28);
+viaFuego.nivelesLibreAcceso.push(34);
+viaFuego.nivelesLibreAcceso.push(38);
+viaFuego.nivelesLibreAcceso.push(44);
+viaFuego.nivelesLibreAcceso.push(48);
+viaFuego.nivelesLibreAcceso.push(54);
+viaFuego.nivelesLibreAcceso.push(58);
+viaFuego.nivelesLibreAcceso.push(64);
+viaFuego.nivelesLibreAcceso.push(68);
+viaFuego.nivelesLibreAcceso.push(74);
+viaFuego.nivelesLibreAcceso.push(78);
+viaFuego.nivelesLibreAcceso.push(84);
+viaFuego.nivelesLibreAcceso.push(88);
+viaFuego.nivelesLibreAcceso.push(94);
+viaFuego.nivelesLibreAcceso.push(98);
+
+
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_CREAR_FUEGO, 2));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_MITIGAR_FUEGO, 6));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_INMUNIDAD_CONTRA_EL_FUEGO, 10));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_SENTIR_EL_CALOR, 12));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_BOLA_DE_FUEGO, 16));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_CONTROL_SOBRE_EL_FUEGO, 20));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_BARRERA_DE_FUEGO, 22));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_ARMA_IGNEA, 26));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_DESCARGA_DE_CALOR, 30));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_VER_EN_LAS_CENIZAS, 32));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_AUMENTAR_LA_TEMPERATURA_AMBIENTAL, 36));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_MINA_DE_FUEGO, 40));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_AUMENTAR_EL_CRITICO, 42));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_SECAR, 46));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_FUNDIR, 50));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_CUERPO_A_FUEGO, 52));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_SACRIFICIO_VITAL, 56));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_INCINERAR, 60));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_CONSUMIR_ESENCIA, 62));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_SACRIFICIO_DE_PODER, 66));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_CRITICO_DIRECTO, 70));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_MAGIA_POR_CAPACIDADES, 72));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_TORMENTA_DE_FUEGO, 76));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_CONSUMIR_VIDA_POR_MAGIA, 80));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_CREAR_IFREET, 82));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_PIRA_ABSOLUTA, 86));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_DEVASTACION, 90));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_SACRIFICAR_A_OTROS, 92));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_SEÑOR_DEL_FUEGO, 96));
+viaFuego.addConjuro(new Conjuro( CONJURO_FUEGO_ARMAGEDON, 100));
+
+vias_set.push(viaFuego);

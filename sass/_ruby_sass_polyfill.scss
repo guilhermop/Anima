@@ -1,0 +1,74 @@
+// Polyfill for Ruby-Sass-only math functions used by the vendored
+// modular-scale extension. Dart Sass does not ship `power()` or
+// `golden_ratio()` as built-ins (they came from the old Ruby Sass /
+// Compass math library), so we reimplement them here in plain Sass.
+
+@use "sass:math";
+
+@function power($base, $exponent) {
+  @return math.pow($base, $exponent);
+}
+
+@function golden_ratio() {
+  @return 1.6180339887;
+}
+
+@function sort_list($list) {
+  $sorted: ();
+  @each $item in $list {
+    $inserted: false;
+    $new-sorted: ();
+    @each $s in $sorted {
+      @if not $inserted and $item < $s {
+        $new-sorted: append($new-sorted, $item);
+        $inserted: true;
+      }
+      $new-sorted: append($new-sorted, $s);
+    }
+    @if not $inserted {
+      $new-sorted: append($new-sorted, $item);
+    }
+    $sorted: $new-sorted;
+  }
+  @return $sorted;
+}
+
+@function reverse_list($list) {
+  $result: ();
+  @for $i from length($list) through 1 {
+    $result: append($result, nth($list, $i));
+  }
+  @return $result;
+}
+
+// compass-mixins' "vertical_rhythm" module (padding-leader,
+// padding-trailer, margin-leader, margin-trailer, adjust-leading-to,
+// establish-baseline) builds its output with a calc()/division
+// pattern that current Dart Sass rejects as an "Undefined operation".
+// These are simplified, calc()-free reimplementations that produce
+// the same kind of rhythmic spacing (a plain multiple of the base
+// line height). Import this AFTER "compass" so these definitions
+// take precedence over the broken originals.
+@function av-rhythm($lines: 1, $offset: 0) {
+  @return ($lines * $base-line-height) - $offset;
+}
+
+@mixin padding-leader($lines: 1, $font-size: $base-font-size) {
+  padding-top: av-rhythm($lines);
+}
+
+@mixin padding-trailer($lines: 1, $font-size: $base-font-size) {
+  padding-bottom: av-rhythm($lines);
+}
+
+@mixin margin-leader($lines: 1, $font-size: $base-font-size) {
+  margin-top: av-rhythm($lines);
+}
+
+@mixin margin-trailer($lines: 1, $font-size: $base-font-size) {
+  margin-bottom: av-rhythm($lines);
+}
+
+@mixin adjust-leading-to($lines, $font-size: $base-font-size) {
+  line-height: av-rhythm($lines);
+}
