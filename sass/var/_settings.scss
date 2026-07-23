@@ -18,7 +18,8 @@ $max-device-width: 2880px;						// Max Document Size
 $nav-distance: 0; 							// Navigation distance from the top of the viewport
 
 // Typography
-$font-family: "Open Sans";
+$font-family: "Inter", "Open Sans", sans-serif;
+$header-font-family: "Cinzel", "Open Sans", serif;
 $font-style-italic: italic;
 $icons: entypo;
 $font-smoothing: antialiased;
@@ -31,7 +32,7 @@ $font-weight-regular: 400;
 $font-weight-light: 300;
 $font-weight-thin: 300;
 
-$header-font-weight: $font-weight-thin;
+$header-font-weight: $font-weight-semibold;
 $body-font-weight: $font-weight-regular;
 $type-font-weight: $font-weight-regular;
 $link-font-weight: $font-weight-regular;
@@ -76,38 +77,38 @@ $body-link-color: #d04525 !default;
 $body-link-hover-color: #c03d20 !default;
 
 // User Interface Colors
-$global-bg-color: #d0d0d0;
+$global-bg-color: #0a0f1a;
 
-$navbar-color: #091a2a;
-$navbar-link-color: #679ed2;
+$navbar-color: #0a0f1a;
+$navbar-link-color: #d9b465;
 
-$primary-color: #091a2a;
-$secondary-color: #3b59a3;
-$default-color: #f2f2f2;
+$primary-color: #14213a;
+$secondary-color: #3d5aa3;
+$default-color: #1c2c47;
 
-$pcolor-1: #091A2A;
-$pcolor-2: #0D1620;
-$pcolor-3: #030F1B;
-$pcolor-4: #3D6995;
-$pcolor-5: #547595;
+$pcolor-1: #14213A;
+$pcolor-2: #101a2c;
+$pcolor-3: #0a0f1a;
+$pcolor-4: #4a6fa5;
+$pcolor-5: #8fa8c9;
 
-$ccolor-1: #412A0A;
-$ccolor-2: #312412;
-$ccolor-3: #2A1A03;
-$ccolor-4: #A0763A;
-$ccolor-5: #A08155;
+$ccolor-1: #3a2a12;
+$ccolor-2: #2c2010;
+$ccolor-3: #1a1408;
+$ccolor-4: #d9b465;
+$ccolor-5: #c9a24a;
 
-$info-color: #3fa384;
-$danger-color: #547595;
-$warning-color: #f6b83f;
-$success-color: #58c026;
+$info-color: #4fd1ae;
+$danger-color: #6b8bb5;
+$warning-color: #e8b25f;
+$success-color: #6bcf7f;
 
-$disabled-color: rgba(176, 179, 170, 0.42);
+$disabled-color: rgba(120, 128, 145, 0.35);
 
-$primary-hover-color: #58b2fa;
-$secondary-hover-color: #6dbb80;
-$default-hover-color: #ffffff;
-$info-hover-color: #868d92;
+$primary-hover-color: #6fa8dc;
+$secondary-hover-color: #4fd1ae;
+$default-hover-color: #2a3f66;
+$info-hover-color: #7fdfc4;
 $danger-hover-color: #f14f4f;
 $warning-hover-color: #fdd27f;
 $success-hover-color: #66d92f;

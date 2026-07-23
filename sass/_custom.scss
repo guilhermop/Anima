@@ -297,3 +297,248 @@ ul.listaCambios {
   color: $warning-color;
 }
 
+
+/* =========================================================================
+   REDESIGN — "Arcane Ledger" theme
+   Deep ink background, antique-gold accents, Cinzel/Inter type pairing.
+   Everything below layers on top of the Gumby framework + the app's own
+   rules above; it doesn't touch markup, only how it's painted.
+   ========================================================================= */
+
+$au-ink:        #0a0f1a;
+$au-panel:      #131f36;
+$au-panel-alt:  #182746;
+$au-border:     #2a3f66;
+$au-border-soft: rgba(201, 162, 74, 0.25);
+$au-gold:       #c9a24a;
+$au-gold-soft:  #a3823c;
+$au-text:       #e9e6da;
+$au-text-dim:   #93a1bd;
+
+::selection {
+  background: rgba(201, 162, 74, 0.35);
+  color: $au-text;
+}
+
+/* Slim, on-theme scrollbar (webkit) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: $au-ink; }
+::-webkit-scrollbar-thumb {
+  background: $au-border;
+  border-radius: 6px;
+  &:hover { background: $au-gold-soft; }
+}
+
+/* Keyboard focus should always be visible */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid $au-gold;
+  outline-offset: 2px;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at top, rgba(201,162,74,0.06), transparent 60%),
+    $au-ink;
+}
+
+p, li, label, span, div {
+  color: $au-text;
+}
+
+a { color: $au-gold; }
+a:hover { color: lighten($au-gold, 10%); }
+
+/* ---------- Navbar ---------- */
+
+.navbar.pretty {
+  background: linear-gradient(180deg, #101a30, $au-ink);
+  border-bottom: 1px solid $au-border-soft;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.45) !important;
+}
+
+.navbar .logo img { filter: drop-shadow(0 0 6px rgba(201,162,74,0.25)); }
+
+.navbar > .row > ul > li > a {
+  font-family: $header-font-family;
+  letter-spacing: 0.04em;
+  font-size: $small;
+  color: $au-text-dim;
+  transition: color .15s ease;
+}
+.navbar > .row > ul > li > a:hover,
+.navbar > .row > ul > li.active > a {
+  color: $au-gold;
+}
+
+/* Dropdown panels off the navbar */
+.navbar li .dropdown {
+  background: $au-panel;
+  border: 1px solid $au-border-soft;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+}
+
+.navbar li .dropdown ul > li a {
+  color: $au-text;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background .15s ease, color .15s ease, padding-left .15s ease;
+}
+.navbar li .dropdown ul > li a:hover {
+  background: rgba(201,162,74,0.12);
+  color: $au-gold;
+  padding-left: 24px;
+}
+.navbar li .dropdown ul > li.desactivado {
+  color: rgba(233, 230, 218, 0.3) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+/* ---------- Cards / panels ---------- */
+
+.recuadroDatos {
+  border: 1px solid $au-border-soft;
+  border-top: 2px solid $au-gold-soft;
+  background-color: $au-panel;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  border-radius: 0.6rem;
+  transition: box-shadow .2s ease;
+}
+.recuadroDatos:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+}
+
+/* ---------- Section headers (the accordion look) ---------- */
+
+.tituloSeccion {
+  font-family: $header-font-family;
+  letter-spacing: 0.03em;
+  background: $au-panel-alt;
+  color: $au-gold;
+  border-top-left-radius: 0.6rem;
+  border-top-right-radius: 0.6rem;
+  border-bottom: 1px solid $au-border-soft;
+  transition: background-color .15s ease;
+}
+.tituloSeccion:hover {
+  background-color: lighten($au-panel-alt, 4%);
+}
+
+.subtituloSeccion {
+  color: $au-text;
+  background-color: rgba(255,255,255,0.02) !important;
+  border-bottom: 1px solid $au-border-soft !important;
+  transition: background-color .15s ease, color .15s ease;
+}
+.subtituloSeccion:hover {
+  background-color: rgba(201,162,74,0.08) !important;
+  color: $au-gold;
+}
+
+.seccionCerrada .tituloSeccion:hover {
+  background-color: lighten($au-panel-alt, 6%) !important;
+}
+
+.flechaAbajo { color: $au-gold; }
+
+/* ---------- Buttons ---------- */
+
+.btn, .ui-button {
+  border-radius: 6px !important;
+  transition: transform .1s ease, box-shadow .15s ease, filter .15s ease;
+}
+.btn:hover, .ui-button:hover {
+  filter: brightness(1.12);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+}
+.btn:active, .ui-button:active {
+  transform: translateY(1px);
+}
+
+.btn.secondary, .ui-button.secondary {
+  border: 1px solid $au-border-soft;
+}
+
+/* ---------- jQuery UI (dialogs, buttons, widgets) re-themed to match ---------- */
+
+.ui-widget-content {
+  background: $au-panel;
+  color: $au-text;
+  border: 1px solid $au-border-soft;
+}
+
+.ui-widget-header {
+  background: $au-panel-alt;
+  border: none;
+  border-bottom: 1px solid $au-gold-soft;
+  color: $au-gold;
+  font-family: $header-font-family;
+  letter-spacing: 0.03em;
+}
+
+.ui-dialog {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+  border-radius: 0;
+  padding: 0.6em 1em;
+}
+
+.ui-dialog .ui-dialog-content {
+  background: $au-panel;
+  color: $au-text;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default {
+  background: $au-panel-alt;
+  border: 1px solid $au-border-soft;
+  color: $au-text;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover {
+  background: rgba(201,162,74,0.18);
+  border: 1px solid $au-gold-soft;
+  color: $au-gold;
+}
+.ui-state-active, .ui-widget-content .ui-state-active {
+  background: $au-gold-soft;
+  border: 1px solid $au-gold;
+  color: $au-ink;
+}
+.ui-state-disabled {
+  opacity: 0.35;
+}
+
+/* ---------- Forms ---------- */
+
+input[type="text"], input[type="number"], input[type="email"],
+input[type="password"], textarea, select {
+  background: $au-panel-alt !important;
+  border: 1px solid $au-border !important;
+  color: $au-text !important;
+  border-radius: 4px;
+}
+input[type="text"]:focus, input[type="number"]:focus,
+textarea:focus, select:focus {
+  border-color: $au-gold !important;
+}
+
+.textAreaAU {
+  background-color: $au-panel-alt;
+  color: $au-text;
+}
+
+/* ---------- Misc text accents ---------- */
+
+.etiquetaPersonales, .etiquetaCaracteristicas, .etiquetaEfectoTecnica {
+  color: $au-gold-soft;
+}
+
+.etiquetaCampoHoja { color: $au-text-dim; }
+.costeCampoHoja { color: $au-gold; }
