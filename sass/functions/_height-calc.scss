@@ -1,6 +1,14 @@
 
 // Calculate the height of an object based on its scale
-
+//
+// NOTE: this used to call ms($ratio, $size), passing the golden-ratio
+// constant itself in as the "multiple" argument. That only produced a
+// sane result by coincidence, riding on a since-removed multi-base-size
+// code path in the vendored modular-scale library. With the simplified
+// (single) $base-size, that same call inflates $size by ~2.18x, which
+// is what was making the navbar logo and other elements balloon to
+// roughly double their intended height. This just adds the +1px
+// border-compensation the function name/usage implies.
 @function height-calc($size) {
-  @return ms($ratio, $size) + 1;
+  @return $size + 1;
 }
