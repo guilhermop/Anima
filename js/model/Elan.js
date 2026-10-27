@@ -51,6 +51,14 @@ Elan.prototype = {
     },
 
     /**
+     * Define diretamente o valor de sincronização (usado na edição manual)
+     * @param {number} valor
+     */
+    setSincronizacion : function(valor) {
+        this.sincronizacion = valor;
+    },
+
+    /**
      *
      * @returns {number}
      */

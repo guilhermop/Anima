@@ -1440,6 +1440,36 @@ Personaje.prototype = {
     },
 
     /**
+     * Define manualmente quanto de Elan (sincronização) o personagem tem com um deus.
+     * Cria o Elan se ainda não existir; valor 0 remove (só se nenhum dom foi comprado).
+     * Nunca deixa a sincronização abaixo do que já foi gasto em dons.
+     * @param {string} nombreElan
+     * @param {number} valor
+     */
+    definirSincronizacionElan : function(nombreElan, valor) {
+        valor = Math.max(0, Math.floor(Number(valor)) || 0);
+        var existente = null;
+        for (var i = 0; i < this.elan.length; i++) {
+            if (this.elan[i].getNombre() == nombreElan) {
+                existente = this.elan[i];
+                break;
+            }
+        }
+        if (existente == null) {
+            if (valor > 0) {
+                this.addElan(new Elan(nombreElan, valor));
+            }
+            return;
+        }
+        if (valor == 0 && existente.getDones().length == 0) {
+            this.removeElan(nombreElan);
+            return;
+        }
+        existente.setSincronizacion(Math.max(valor, existente.getSinGastada()));
+        lanzarEvento(EVENT_CHARACTER_SECCION_ELAN);
+    },
+
+    /**
      *
      * @returns {Elan[]}
      */

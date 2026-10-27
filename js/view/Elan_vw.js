@@ -77,3 +77,94 @@ function appendDonesElan(elemento, nombre, dialogo) {
     }
     elemento.append(gridBotones);
 }
+
+
+/**
+ * Diálogo para definir manualmente quanto de Elan o personagem tem com cada deus.
+ * Beryl e Shajad aparecem em colunas separadas; valor 0 = sem Elan com esse deus.
+ */
+function dialogoDefinirElan(event) {
+    // O botão fica dentro do título da seção, que recolhe/expande ao clicar: não deixar o clique subir.
+    if (event && event.stopPropagation) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    var dialogo = $("<div></div>").addClass("dialogoDefinirElan");
+    dialogo.append($("<p></p>").addClass("ayudaDefinirElan").text(_l(UI_DEFINIR_ELAN_AYUDA)));
+
+    var columnas = $("<div></div>").addClass("columnasDefinirElan");
+    var tipos = [BERYL, SHAJAD];
+    var inputs = [];
+
+    for (var t = 0; t < tipos.length; t++) {
+        var columna = $("<div></div>").addClass("columnaDefinirElan columna" + tipos[t]);
+        columna.append($("<h3></h3>").text(tipos[t]));
+
+        for (var i = 0; i < berylShajad_set.length; i++) {
+            var dios = berylShajad_set[i];
+            if (dios.getTipo() != tipos[t]) {
+                continue;
+            }
+            var actual = null;
+            var elanPersonaje = personaje_actual.getElan();
+            for (var k = 0; k < elanPersonaje.length; k++) {
+                if (elanPersonaje[k].getNombre() == dios.getNombre()) {
+                    actual = elanPersonaje[k];
+                }
+            }
+            var minimo = (actual == null) ? 0 : actual.getSinGastada();
+            var valor = (actual == null) ? 0 : actual.getSincronizacion();
+
+            var fila = $("<label></label>").addClass("filaDefinirElan");
+            fila.append($("<span></span>").addClass("nombreDefinirElan").text(_l(dios.getNombre())));
+            var input = $("<input type='number'>")
+                .attr({min: minimo, max: 100, step: 5})
+                .val(valor);
+            input.data("nombre", dios.getNombre());
+            input.data("original", valor);
+            inputs.push(input);
+            fila.append(input);
+            columna.append(fila);
+        }
+        columnas.append(columna);
+    }
+    dialogo.append(columnas);
+
+    dialogo.dialog({
+        modal: true,
+        autoOpen: true,
+        draggable: true,
+        resizable: true,
+        title: _l(UI_DEFINIR_ELAN),
+        width: Math.min(ANCHO_DIALOGO, $(window).width() - 20),
+        closeOnEscape: true,
+        buttons: [
+            {
+                text: _l(UI_APLICAR),
+                click: function() {
+                    for (var n = 0; n < inputs.length; n++) {
+                        var valorNuevo = parseInt(inputs[n].val(), 10);
+                        if (isNaN(valorNuevo)) {
+                            valorNuevo = 0;
+                        }
+                        if (valorNuevo != inputs[n].data("original")) {
+                            personaje_actual.definirSincronizacionElan(inputs[n].data("nombre"), valorNuevo);
+                        }
+                    }
+                    // Garante que a seção Elan seja redesenhada mesmo se as notificações estiverem desligadas
+                    $(DIV_DESTINO_ELAN).empty().append(muestraElan(personaje_actual.GENERACION_INICIADA));
+                    $(this).dialog("close");
+                }
+            },
+            {
+                text: _l(UI_CANCELAR),
+                click: function() {
+                    $(this).dialog("close");
+                }
+            }
+        ],
+        close: function() {
+            dialogo.dialog("destroy").remove();
+        }
+    });
+}

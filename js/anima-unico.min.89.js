@@ -571,6 +571,9 @@ var UI_BTN_TIPO = (new L("Tipo","Tipo","Type","Type")).getId();
 var UI_REPARTO_CARACTERISTICAS = (new L("Asigna los valores","Asigna los valores","Assign the points","Assignez les valeurs")).getId();
 var UI_NECESITAS_40_ATAQUE_DEFENSA = (new L("Necesitas 40 de ataque y defensa por cada arte marcial.","Necesitas 40 de ataque y defensa por cada arte marcial.","You need 40 in attack and defenses for each martial art","Vous avez besoin de 40 en attaque et défence par art martial")).getId();
 var UI_ESPECIFICA = (new L("Especifica","Especifica","Specify","Spécifiez")).getId();
+var UI_DEFINIR_ELAN = (new L("UI_DEFINIR_ELAN","Elan por deidad","Elan per god","Elan par divinité")).getId();
+var UI_DEFINIR_ELAN_AYUDA = (new L("UI_DEFINIR_ELAN_AYUDA","Indica cuánto Elan (sincronización) tiene el personaje con cada deidad. 0 = sin Elan. No puede bajar de lo ya gastado en dones.","Set how much Elan (synchronization) the character has with each god. 0 = no Elan. It cannot go below what was already spent on gifts.","Indiquez combien d'Elan (synchronisation) le personnage a avec chaque divinité. 0 = aucun Elan. Impossible de descendre sous ce qui est déjà dépensé en dons.")).getId();
+var UI_APLICAR = (new L("UI_APLICAR","Aplicar","Apply","Appliquer")).getId();
 var UI_SINCRONIZACION = (new L("Sincronizacion","Sincronización","Synchronization","Syncronisation")).getId();
 var UI_CONOCIMIENTO_MARCIAL = (new L("Conocimiento Marcial","Conocimiento Marcial","Martial Knowledge","Connaissance Martiale")).getId();
 var UI_HABILIDADES_KI = (new L("Habilidades del Ki","Habilidades del Ki","Ki Abilities","Pouvoirs du Ki")).getId();
@@ -32612,6 +32615,14 @@ Elan.prototype = {
     },
 
     /**
+     * Define diretamente o valor de sincronização (usado na edição manual)
+     * @param {number} valor
+     */
+    setSincronizacion : function(valor) {
+        this.sincronizacion = valor;
+    },
+
+    /**
      *
      * @returns {number}
      */
@@ -44427,6 +44438,36 @@ Personaje.prototype = {
     },
 
     /**
+     * Define manualmente quanto de Elan (sincronização) o personagem tem com um deus.
+     * Cria o Elan se ainda não existir; valor 0 remove (só se nenhum dom foi comprado).
+     * Nunca deixa a sincronização abaixo do que já foi gasto em dons.
+     * @param {string} nombreElan
+     * @param {number} valor
+     */
+    definirSincronizacionElan : function(nombreElan, valor) {
+        valor = Math.max(0, Math.floor(Number(valor)) || 0);
+        var existente = null;
+        for (var i = 0; i < this.elan.length; i++) {
+            if (this.elan[i].getNombre() == nombreElan) {
+                existente = this.elan[i];
+                break;
+            }
+        }
+        if (existente == null) {
+            if (valor > 0) {
+                this.addElan(new Elan(nombreElan, valor));
+            }
+            return;
+        }
+        if (valor == 0 && existente.getDones().length == 0) {
+            this.removeElan(nombreElan);
+            return;
+        }
+        existente.setSincronizacion(Math.max(valor, existente.getSinGastada()));
+        lanzarEvento(EVENT_CHARACTER_SECCION_ELAN);
+    },
+
+    /**
      *
      * @returns {Elan[]}
      */
@@ -49068,7 +49109,7 @@ function muestraElan(estadoGeneracion) {
 
     var muestraBotones = ((estadoGeneracion == ESTADO_GENERACION_INICIADA) || (estadoGeneracion == ESTADO_GENERACION_SUBIENDO_NIVEL));
 
-    div.append(muestraSubtitulo(UI_ELAN, true, false, []));
+    div.append(muestraSubtitulo(UI_ELAN, true, true, [{texto: _l(UI_DEFINIR_ELAN), delegado: dialogoDefinirElan}]));
     var divContenido = getDiv(CSS_CONTENIDO_RECUADRO);
 
     if (personaje_actual.elan.length == 0) {
@@ -54371,6 +54412,97 @@ function appendDonesElan(elemento, nombre, dialogo) {
         gridBotones.append($("<li></li>").append(botonDon));
     }
     elemento.append(gridBotones);
+}
+
+
+/**
+ * Diálogo para definir manualmente quanto de Elan o personagem tem com cada deus.
+ * Beryl e Shajad aparecem em colunas separadas; valor 0 = sem Elan com esse deus.
+ */
+function dialogoDefinirElan(event) {
+    // O botão fica dentro do título da seção, que recolhe/expande ao clicar: não deixar o clique subir.
+    if (event && event.stopPropagation) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    var dialogo = $("<div></div>").addClass("dialogoDefinirElan");
+    dialogo.append($("<p></p>").addClass("ayudaDefinirElan").text(_l(UI_DEFINIR_ELAN_AYUDA)));
+
+    var columnas = $("<div></div>").addClass("columnasDefinirElan");
+    var tipos = [BERYL, SHAJAD];
+    var inputs = [];
+
+    for (var t = 0; t < tipos.length; t++) {
+        var columna = $("<div></div>").addClass("columnaDefinirElan columna" + tipos[t]);
+        columna.append($("<h3></h3>").text(tipos[t]));
+
+        for (var i = 0; i < berylShajad_set.length; i++) {
+            var dios = berylShajad_set[i];
+            if (dios.getTipo() != tipos[t]) {
+                continue;
+            }
+            var actual = null;
+            var elanPersonaje = personaje_actual.getElan();
+            for (var k = 0; k < elanPersonaje.length; k++) {
+                if (elanPersonaje[k].getNombre() == dios.getNombre()) {
+                    actual = elanPersonaje[k];
+                }
+            }
+            var minimo = (actual == null) ? 0 : actual.getSinGastada();
+            var valor = (actual == null) ? 0 : actual.getSincronizacion();
+
+            var fila = $("<label></label>").addClass("filaDefinirElan");
+            fila.append($("<span></span>").addClass("nombreDefinirElan").text(_l(dios.getNombre())));
+            var input = $("<input type='number'>")
+                .attr({min: minimo, max: 100, step: 5})
+                .val(valor);
+            input.data("nombre", dios.getNombre());
+            input.data("original", valor);
+            inputs.push(input);
+            fila.append(input);
+            columna.append(fila);
+        }
+        columnas.append(columna);
+    }
+    dialogo.append(columnas);
+
+    dialogo.dialog({
+        modal: true,
+        autoOpen: true,
+        draggable: true,
+        resizable: true,
+        title: _l(UI_DEFINIR_ELAN),
+        width: Math.min(ANCHO_DIALOGO, $(window).width() - 20),
+        closeOnEscape: true,
+        buttons: [
+            {
+                text: _l(UI_APLICAR),
+                click: function() {
+                    for (var n = 0; n < inputs.length; n++) {
+                        var valorNuevo = parseInt(inputs[n].val(), 10);
+                        if (isNaN(valorNuevo)) {
+                            valorNuevo = 0;
+                        }
+                        if (valorNuevo != inputs[n].data("original")) {
+                            personaje_actual.definirSincronizacionElan(inputs[n].data("nombre"), valorNuevo);
+                        }
+                    }
+                    // Garante que a seção Elan seja redesenhada mesmo se as notificações estiverem desligadas
+                    $(DIV_DESTINO_ELAN).empty().append(muestraElan(personaje_actual.GENERACION_INICIADA));
+                    $(this).dialog("close");
+                }
+            },
+            {
+                text: _l(UI_CANCELAR),
+                click: function() {
+                    $(this).dialog("close");
+                }
+            }
+        ],
+        close: function() {
+            dialogo.dialog("destroy").remove();
+        }
+    });
 }
 
 
